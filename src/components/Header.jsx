@@ -28,28 +28,28 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800"
+      className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 w-full overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-full sm:max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full">
+        <div className="flex justify-between items-center h-14 sm:h-16 w-full min-w-0">
           {/* Logo */}
           <motion.div 
             whileHover={{ scale: 1.05 }}
-            className="flex-shrink-0"
+            className="flex-shrink-0 min-w-0"
           >
-            <a href="#home" className="text-2xl font-bold text-yellow-400">
+            <a href="#home" className="text-xl sm:text-2xl font-bold text-yellow-400 truncate">
               TechCorp
             </a>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-2 lg:space-x-6 flex-1 justify-center max-w-xs lg:max-w-md">
             {navItems.map((item) => (
               <motion.a
                 key={item.name}
                 href={item.href}
-                whileHover={{ scale: 1.1 }}
-                className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium"
+                whileHover={{ scale: 1.05 }}
+                className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium whitespace-nowrap text-xs lg:text-sm"
               >
                 {item.name}
               </motion.a>
@@ -59,20 +59,20 @@ const Header = () => {
           {/* Get In Touch Button */}
           <motion.button
             onClick={handleWhatsAppClick}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="hidden md:block bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="hidden md:block bg-yellow-400 text-black px-3 lg:px-4 py-1.5 lg:py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25 text-xs lg:text-sm whitespace-nowrap flex-shrink-0"
           >
-            Get In Touch
+            Contact
           </motion.button>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex-shrink-0 ml-1">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-yellow-400 transition-colors"
+              className="text-white hover:text-yellow-400 transition-colors p-1 touch-manipulation"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
@@ -83,22 +83,25 @@ const Header = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden py-4 border-t border-gray-800"
+            className="md:hidden py-3 border-t border-gray-800 w-full overflow-hidden"
           >
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-3 w-full">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium"
+                  className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium py-2 px-1 block w-full"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </a>
               ))}
               <button 
-                onClick={handleWhatsAppClick}
-                className="bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 w-fit"
+                onClick={() => {
+                  handleWhatsAppClick();
+                  setIsMenuOpen(false);
+                }}
+                className="bg-yellow-400 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 w-fit mt-2 touch-manipulation"
               >
                 Get In Touch
               </button>
