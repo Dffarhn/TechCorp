@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -10,13 +10,15 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
+      <Header isModalOpen={isModalOpen} />
       <Hero />
       <About />
       <Services />
-      <Projects />
+      <Projects onModalStateChange={setIsModalOpen} />
       <Testimonials />
       <Contact />
       <Footer />

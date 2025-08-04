@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, Github, Eye, Play, ArrowRight, X } from 'lucide-react'
 
-const Projects = () => {
+const Projects = ({ onModalStateChange }) => {
   const [hoveredProject, setHoveredProject] = useState(null)
   const [selectedProject, setSelectedProject] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
 
   const projects = [
     {
@@ -82,6 +83,33 @@ const Projects = () => {
 
   const featuredProject = projects.find(p => p.featured)
   const regularProjects = projects.filter(p => !p.featured)
+
+  // Keyboard event handler for ESC key and modal state management
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setSelectedImage(null)
+        setSelectedProject(null)
+      }
+    }
+
+    if (selectedImage || selectedProject) {
+      document.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedImage, selectedProject])
+
+  // Notify parent about modal state
+  React.useEffect(() => {
+    if (onModalStateChange) {
+      onModalStateChange(selectedProject !== null || selectedImage !== null)
+    }
+  }, [selectedProject, selectedImage, onModalStateChange])
 
   return (
     <section id="projects" className="pt-32 pb-20 bg-gray-900 relative overflow-hidden">
@@ -202,12 +230,12 @@ const Projects = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.1 * index }}
-                    className="flex-1 h-20 rounded-xl overflow-hidden border-2 border-yellow-400/30 hover:border-yellow-400 transition-colors cursor-pointer"
+                    className="flex-1 h-24 rounded-xl overflow-hidden border-2 border-yellow-400/30 hover:border-yellow-400 transition-colors cursor-pointer"
                   >
                     <img
                       src={img}
                       alt={`${featuredProject.title} preview ${index + 2}`}
-                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-300"
                     />
                   </motion.div>
                 ))}
@@ -357,12 +385,12 @@ const Projects = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.1 * imgIndex }}
-                    className="flex-1 h-12 rounded-lg overflow-hidden border border-yellow-400/30 hover:border-yellow-400 transition-colors cursor-pointer"
+                    className="flex-1 h-16 rounded-lg overflow-hidden border border-yellow-400/30 hover:border-yellow-400 transition-colors cursor-pointer"
                   >
                     <img
                       src={img}
                       alt={`${project.title} preview ${imgIndex + 2}`}
-                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-300"
                     />
                   </motion.div>
                 ))}
@@ -374,138 +402,246 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Image Gallery Modal - Mobile Optimized */}
+        {/* Image Gallery Modal - Professional Design */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-y-auto"
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-hidden"
               onClick={() => setSelectedProject(null)}
             >
-              <div className="min-h-full flex items-center justify-center p-3 sm:p-4">
+              {/* Professional Header */}
+              <div className="absolute top-0 left-0 right-0 z-30 bg-gradient-to-b from-black/90 via-black/60 to-transparent h-24">
+                <div className="flex items-center justify-between h-full px-6 lg:px-8">
+                  <div className="flex items-center space-x-4">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedProject(null)}
+                      className="bg-white/10 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20"
+                    >
+                      <X className="w-5 h-5" />
+                    </motion.button>
+                    <div className="hidden sm:block">
+                      <h3 className="text-white font-bold text-xl">{selectedProject?.title}</h3>
+                      <p className="text-gray-300 text-sm">{selectedProject?.category}</p>
+                    </div>
+                    <div className="sm:hidden">
+                      <h3 className="text-white font-bold text-lg">{selectedProject?.title}</h3>
+                    </div>
+                  </div>
+                  
+                  {/* Desktop Controls */}
+                  <div className="hidden md:flex items-center space-x-3">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-full font-semibold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Live Demo
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20"
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      Source Code
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Content */}
+              <div className="flex items-center justify-center min-h-screen p-4 pt-28 pb-8">
                 <motion.div
-                  initial={{ scale: 0.95, opacity: 0, y: 10 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  exit={{ scale: 0.95, opacity: 0, y: 10 }}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
                   transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                  className="bg-gradient-to-br from-black via-gray-900 to-black rounded-xl sm:rounded-2xl lg:rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-hidden border border-yellow-400/30 shadow-2xl shadow-yellow-400/20"
+                  className="relative max-w-6xl w-full max-h-[85vh] overflow-hidden rounded-2xl lg:rounded-3xl border border-white/20 shadow-2xl bg-gradient-to-br from-gray-900 via-black to-gray-900 backdrop-blur-sm"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Modal Header with Large Image */}
-                  <div className="relative h-40 xs:h-48 sm:h-56 md:h-64 lg:h-80">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
-                    {/* Close Button - Mobile Optimized */}
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setSelectedProject(null)}
-                      className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-black/90 transition-colors z-20 touch-manipulation shadow-lg"
-                    >
-                      <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </motion.button>
-
-                    {/* Project Title Overlay */}
-                    <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4">
-                      <div className="text-yellow-400 text-xs sm:text-sm font-semibold mb-1">
-                        {selectedProject.category}
+                  {/* Project Hero Image */}
+                  <div className="relative h-48 sm:h-56 md:h-64 lg:h-72">
+                    <img
+                      src={selectedProject?.image}
+                      alt={selectedProject?.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    
+                    {/* Project Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-yellow-400 text-sm font-semibold mb-1">
+                            {selectedProject?.category}
+                          </div>
+                          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+                            {selectedProject?.title}
+                          </h2>
+                        </div>
+                        <div className="hidden sm:flex items-center space-x-2">
+                          <div className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-semibold border border-green-500/30">
+                            {selectedProject?.status}
+                          </div>
+                        </div>
                       </div>
-                      <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                        {selectedProject.title}
-                      </h2>
                     </div>
                   </div>
 
-                  {/* Modal Content - Scrollable */}
-                  <div className="overflow-y-auto max-h-[calc(90vh-10rem)] sm:max-h-[calc(90vh-12rem)]">
-                    <div className="p-3 sm:p-4 lg:p-6">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-white mb-3 sm:mb-4 flex items-center">
-                        <Eye className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-yellow-400" />
-                        Project Gallery
-                      </h3>
-                      
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
-                    {selectedProject.gallery.map((img, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.4, delay: 0.1 * index }}
-                          className="relative group cursor-pointer rounded-lg overflow-hidden border border-gray-700 hover:border-yellow-400/50 transition-colors touch-manipulation"
-                        >
-                          <div className="aspect-video">
-                            <img
-                              src={img}
-                              alt={`${selectedProject.title} screenshot ${index + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                          <div className="absolute inset-0 bg-black/20 sm:bg-black/30 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              className="bg-yellow-400 text-black p-1.5 sm:p-2 rounded-full"
-                            >
-                              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-                            </motion.div>
-                          </div>
-                      </motion.div>
-                    ))}
-                      </div>
-
-                      {/* Project Details - Mobile Optimized */}
-                      <div className="space-y-4 sm:space-y-6">
+                  {/* Content Area */}
+                  <div className="overflow-y-auto max-h-[calc(85vh-12rem)]">
+                    <div className="p-6 lg:p-8">
+                      {/* Project Details - Moved to top */}
+                      <div className="grid md:grid-cols-2 gap-8 mb-8">
                         {/* About Section */}
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-white mb-2 sm:mb-3">About This Project</h4>
-                          <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-3 sm:mb-4">
-                            {selectedProject.description}
+                          <h4 className="text-lg font-bold text-white mb-4">About This Project</h4>
+                          <p className="text-gray-300 leading-relaxed">
+                            {selectedProject?.description}
                           </p>
                         </div>
                         
                         {/* Technologies */}
                         <div>
-                          <h4 className="text-sm sm:text-base font-semibold text-white mb-2">Technologies Used</h4>
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
-                            {selectedProject.technologies.map((tech) => (
+                          <h4 className="text-lg font-bold text-white mb-4">Technologies Used</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject?.technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="bg-yellow-400/10 text-yellow-400 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs border border-yellow-400/30 font-medium"
+                                className="bg-yellow-400/10 text-yellow-400 px-4 py-2 rounded-full text-sm border border-yellow-400/30 font-medium hover:bg-yellow-400/20 transition-colors"
                               >
                                 {tech}
                               </span>
                             ))}
                           </div>
                         </div>
+                      </div>
 
-                        {/* Action Buttons */}
-                        <div className="space-y-2 sm:space-y-3">
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-2.5 sm:py-3 px-4 rounded-full font-bold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg shadow-yellow-400/25 flex items-center justify-center text-sm touch-manipulation"
-                          >
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            View Live Demo
-                          </motion.button>
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full border-2 border-yellow-400 text-yellow-400 py-2.5 sm:py-3 px-4 rounded-full font-bold hover:bg-yellow-400 hover:text-black transition-all duration-300 flex items-center justify-center text-sm touch-manipulation"
-                          >
-                            <Github className="w-4 h-4 mr-2" />
-                            View Source Code
-                          </motion.button>
+                      {/* Gallery Section - Moved to bottom */}
+                      <div className="mb-8">
+                        <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+                          <Eye className="w-5 h-5 mr-3 text-yellow-400" />
+                          Project Screenshots
+                        </h3>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                          {selectedProject?.gallery.map((img, index) => (
+                            <motion.div
+                              key={index}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: 0.1 * index }}
+                              className="group relative cursor-pointer"
+                              onClick={() => setSelectedImage(img)}
+                            >
+                              <div className="relative overflow-hidden rounded-xl border border-gray-700 hover:border-yellow-400/50 transition-all duration-300">
+                                <div className="aspect-[9/16]">
+                                  <img
+                                    src={img}
+                                    alt={`${selectedProject?.title} screenshot ${index + 1}`}
+                                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                  />
+                                </div>
+                                
+                                {/* Hover Overlay */}
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                  <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    className="bg-yellow-400 text-black p-3 rounded-full shadow-lg"
+                                  >
+                                    <Eye className="w-5 h-5" />
+                                  </motion.div>
+                                </div>
+                              </div>
+                              
+                              {/* Screenshot Label */}
+                              <div className="mt-2 text-center">
+                                <span className="text-gray-400 text-sm font-medium">
+                                  Screenshot {index + 1}
+                                </span>
+                              </div>
+                            </motion.div>
+                          ))}
                         </div>
                       </div>
+
+                      {/* Mobile Action Buttons */}
+                      <div className="mt-8 space-y-3 md:hidden">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-4 px-6 rounded-full font-bold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 shadow-lg shadow-yellow-400/25 flex items-center justify-center"
+                        >
+                          <ExternalLink className="w-5 h-5 mr-2" />
+                          View Live Demo
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full border-2 border-yellow-400 text-yellow-400 py-4 px-6 rounded-full font-bold hover:bg-yellow-400 hover:text-black transition-all duration-300 flex items-center justify-center"
+                        >
+                          <Github className="w-5 h-5 mr-2" />
+                          View Source Code
+                        </motion.button>
+                      </div>
                     </div>
+                  </div>
+                </motion.div>
+              </div>
+
+
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Full Size Image Modal */}
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm z-[60] overflow-y-auto"
+              onClick={() => setSelectedImage(null)}
+            >
+              <div className="min-h-full flex items-center justify-center p-4">
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0, y: 10 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.95, opacity: 0, y: 10 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  className="relative max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-xl sm:rounded-2xl border border-yellow-400/30 shadow-2xl shadow-yellow-400/20"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setSelectedImage(null)}
+                    className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white p-3 rounded-full hover:bg-black/90 transition-colors z-20 shadow-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.button>
+
+                  {/* Full Size Image */}
+                  <div className="relative">
+                    <img
+                      src={selectedImage}
+                      alt="Full size preview"
+                      className="w-full h-auto max-h-[90vh] object-contain"
+                    />
+                  </div>
+
+                  {/* Image Navigation (if needed) */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">
+                    Click outside to close
                   </div>
                 </motion.div>
               </div>
