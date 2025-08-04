@@ -4,7 +4,7 @@ import { MessageCircle, Clock, CheckCircle, Users } from 'lucide-react'
 
 const Contact = () => {
   // WhatsApp number (replace with your actual WhatsApp number)
-  const whatsappNumber = "+6285878997733" // Format: +62 for Indonesia
+  const whatsappNumber = "+628992050001" // Format: +62 for Indonesia
   
   const handleWhatsAppClick = (message = "") => {
     const encodedMessage = encodeURIComponent(message)

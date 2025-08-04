@@ -86,9 +86,14 @@ const About = () => {
               whileHover={{ scale: 1.05 }}
               className="inline-block"
             >
-              <button className="bg-yellow-400 text-black px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25">
+              <a
+                href="https://wa.me/628992050001?text=Halo! Saya ingin tahu lebih lanjut tentang perusahaan Anda. Bisa share informasi lebih detail?"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-yellow-400 text-black px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25"
+              >
                 Learn More About Us
-              </button>
+              </a>
             </motion.div>
           </motion.div>
 

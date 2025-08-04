@@ -139,7 +139,7 @@ const Services = () => {
             Tertarik dengan layanan kami? Mari diskusikan kebutuhan proyek Anda
           </p>
           <motion.a
-            href="https://wa.me/6285878997733?text=Halo,%20saya%20tertarik%20dengan%20layanan%20Anda%20dan%20ingin%20konsultasi%20gratis"
+            href="https://wa.me/628992050001?text=Halo,%20saya%20tertarik%20dengan%20layanan%20Anda%20dan%20ingin%20konsultasi%20gratis"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

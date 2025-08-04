@@ -6,7 +6,7 @@ const Header = ({ isModalOpen = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   // WhatsApp number for CTA
-  const whatsappNumber = "+6285878997733"
+  const whatsappNumber = "+628992050001"
   
   const handleWhatsAppClick = () => {
     const message = "Hello! I found your website and I'm interested in your IT services. Can we discuss my requirements?"

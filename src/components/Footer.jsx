@@ -4,7 +4,7 @@ import { MessageCircle, ArrowUp } from 'lucide-react'
 
 const Footer = () => {
   // WhatsApp number (same as in Contact component)
-  const whatsappNumber = "+6285878997733"
+  const whatsappNumber = "+628992050001"
   
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })

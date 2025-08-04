@@ -217,13 +217,16 @@ const Testimonials = () => {
           <p className="text-gray-300 mb-6 text-lg">
             Bergabunglah dengan klien-klien kami yang telah merasakan manfaat aplikasi mobile dan web yang inovatif
           </p>
-          <motion.button
+          <motion.a
+            href="https://wa.me/628992050001?text=Halo! Saya tertarik untuk memulai project dengan Anda. Bisa diskusi lebih lanjut?"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 rounded-full font-semibold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25"
+            className="inline-block bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 rounded-full font-semibold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-400/25"
           >
             Start Your Project Today
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

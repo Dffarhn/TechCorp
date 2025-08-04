@@ -1,10 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Shield, Award, TrendingUp, Users, CheckCircle, Star, MessageCircle } from 'lucide-react'
-
+  
 const Hero = () => {
   // WhatsApp number for CTA
-  const whatsappNumber = "+6285878997733"
+  const whatsappNumber = "+628992050001"
   
   const handleWhatsAppClick = () => {
     const message = "Hello! I'm interested in your premium IT solutions. Can we discuss my business requirements?"
