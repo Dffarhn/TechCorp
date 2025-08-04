@@ -56,7 +56,7 @@ const Footer = () => {
           >
             <div>
               <h3 className="text-2xl font-bold text-yellow-400 mb-4">
-                TechCorp
+                pusatpelatihan.com
               </h3>
               <p className="text-gray-300 leading-relaxed">
                 Empowering businesses with innovative IT solutions. We specialize in IT consulting, software development, System Integrations, and ERP & CRM implementations.
@@ -186,7 +186,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} TechCorp. All rights reserved. Built with ❤️ in Indonesia.
+              © {new Date().getFullYear()} pusatpelatihan.com. All rights reserved. Built with ❤️ in Indonesia.
             </div>
 
             {/* Legal Links */}

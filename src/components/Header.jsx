@@ -38,7 +38,7 @@ const Header = () => {
             className="flex-shrink-0 min-w-0"
           >
             <a href="#home" className="text-xl sm:text-2xl font-bold text-yellow-400 truncate">
-              TechCorp
+              pusatpelatihan.com
             </a>
           </motion.div>
 

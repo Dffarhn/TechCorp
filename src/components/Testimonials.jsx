@@ -6,30 +6,48 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Budi Santoso",
-      position: "CEO, PT. Digital Nusantara",
+      name: "Ahmad Fauzi",
+      position: "Traveler Muslim",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-      comment: "TechCorp telah membantu kami mentransformasi bisnis dengan solusi e-commerce yang luar biasa. Tim mereka sangat profesional dan responsif terhadap kebutuhan kami.",
+      comment: "HalalMate sangat membantu saat traveling! Fitur scan produk untuk cek kehalalan makanan sangat praktis. AI recommendation-nya akurat banget, jadi gak perlu bingung cari makanan halal di tempat baru.",
       rating: 5,
-      company: "PT. Digital Nusantara"
+      company: "Pengguna HalalMate"
     },
     {
       id: 2,
-      name: "Sari Wijaya",
-      position: "CTO, Fintech Solutions",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
-      comment: "Aplikasi mobile banking yang dikembangkan TechCorp sangat memukau. Keamanan tinggi, performa cepat, dan UI/UX yang sangat user-friendly. Highly recommended!",
+      name: "Zakie Irdana",
+      position: "Pelanggan Save Bite",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+      comment: "Aplikasi Save Bite keren banget! Bisa dapet makanan enak dengan harga murah sebelum restoran tutup. UI-nya simple dan mudah dipakai. Jadi hemat budget tapi tetap bisa makan enak!",
       rating: 5,
-      company: "Fintech Solutions"
+      company: "Pengguna Save Bite"
     },
     {
       id: 3,
-      name: "Dr. Ahmad Rahman",
-      position: "Direktur, RS. Sehat Sentosa",
+      name: "Budi Santoso",
+      position: "Kasir Toko",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-      comment: "Sistem manajemen rumah sakit dari TechCorp sangat membantu operasional harian kami. Integrasi yang seamless dan support yang excellent. Terima kasih TechCorp!",
+      comment: "POS Kasir ini super cepat dan mudah dipakai! Transaksi jadi lebih efisien, laporan penjualan real-time membantu banget untuk tracking stok. Interface-nya user-friendly sekali.",
       rating: 5,
-      company: "RS. Sehat Sentosa"
+      company: "Pengguna POS Kasir"
+    },
+    {
+      id: 4,
+      name: "Diana Sari",
+      position: "Fashion Enthusiast",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+      comment: "FitOutfit ini game changer! Virtual try-on feature-nya keren banget, bisa liat gimana outfit bakal keliatan sebelum beli. Rekomendasi personal color-nya juga akurat, jadi gak salah pilih warna lagi.",
+      rating: 5,
+      company: "Pengguna FitOutfit"
+    },
+    {
+      id: 5,
+      name: "Rudi Hartono",
+      position: "Pelanggan Laundry",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+      comment: "La Laundry app sangat memudahkan! Bisa order laundry online, tracking progress real-time, dan notifikasi ketika cucian sudah selesai. Gak perlu antri lagi di tempat laundry!",
+      rating: 5,
+      company: "Pengguna La Laundry"
     }
   ]
 
@@ -58,12 +76,12 @@ const Testimonials = () => {
           </h2>
           <div className="w-24 h-1 bg-yellow-400 mx-auto mb-8"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Kepercayaan dan kepuasan klien adalah prioritas utama kami. Berikut testimoni dari beberapa klien yang telah bekerja sama dengan kami.
+            Kepercayaan dan kepuasan klien adalah prioritas utama kami. Berikut testimoni dari klien yang telah menggunakan aplikasi yang kami kembangkan.
           </p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -170,15 +188,15 @@ const Testimonials = () => {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">98%</div>
-              <div className="text-gray-300 text-sm">Client Satisfaction</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">100%</div>
+              <div className="text-gray-300 text-sm">Project Success Rate</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">5+</div>
-              <div className="text-gray-300 text-sm">Projects Delivered</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">5</div>
+              <div className="text-gray-300 text-sm">Projects Completed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">10+</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">5</div>
               <div className="text-gray-300 text-sm">Happy Clients</div>
             </div>
             <div className="text-center">
@@ -197,7 +215,7 @@ const Testimonials = () => {
           className="text-center mt-12"
         >
           <p className="text-gray-300 mb-6 text-lg">
-            Bergabunglah dengan klien-klien kami yang telah merasakan manfaat solusi teknologi terbaik
+            Bergabunglah dengan klien-klien kami yang telah merasakan manfaat aplikasi mobile dan web yang inovatif
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
